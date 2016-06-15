@@ -1,0 +1,145 @@
+<div class="jumbotron">
+    <h1>Welcome to the <span class="zf-green">Signifly Sample Application</span></h1>
+
+    <p>
+        Congratulations! You have successfully installed the
+        <a href="https://github.com/telkins/signifly-sample-app" target="_blank">Signifly Sample Application</a>,
+        based on the <a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">ZF Skeleton Application</a>.
+        You are currently running Zend Framework version <?= \Application\Module::VERSION ?>.
+        The skeleton can serve as a simple starting point for you to begin
+        building your application on ZF, which is exactly what happened here.
+    </p>
+
+    <p><a class="btn btn-success btn-lg" href="https://github.com/telkins/signifly-sample-app" target="_blank">Fork Signifly Sample Application on GitHub &raquo;</a></p>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">How to Use the Application</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    The application sets out to meet the requirements set forth
+                    in the description that I received. To use the application, you
+                    can start by following these steps:
+                </p>
+                <ul>
+                    <li>First, make sure that you have copied
+                    <code>config/autoload/local.php.dist</code> to 
+                    <code>config/autoload/local.php</code> and updated the database
+                    connection data.</li>
+                    <li>You can click on the Projects tab to view or create projects.
+                    Currently, a project is nothing more than a name and a collection
+                    of team members.</li>
+                    <li>Project creation consists of providing a project name and then
+                    specifying technologies and areas of expertise that are expected
+                    to be required for the project.</li>
+                    <li>The application will then create the new project and seed it
+                    with team members.</li>
+                    <li>You can then add or remove team members, all the while viewing
+                    each member's relevant data and profile image.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">What's Missing</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    As described in the instructions/requirements, many things
+                    were left by the wayside in order to provide a working demonstration
+                    application. I feel the need to point out some of these:
+                </p>
+                <ul>
+                    <li>Most common UI behavior/look/feel is left unaddressed.</li>
+                    <li>The database is *very* simple and expects the user to follow the
+                    "happy path". No indexes or constraints of any kind were used/enforced.</li>
+                    <li>The project team "seeding" can be improved upon, but would need time
+                    to build out a more complex "project create" form, which would in turn
+                    provide more criteria to use.</li>
+                    <li>It may not be apparent, but I'm a *huge* proponent of unit tests. None
+                    were written for this project, however. It's clear to me, though, that the
+                    initial unit tests should be written around project creation/seeding and
+                    then project manipulation.</li>
+                    <li>The database is only modestly populated. Entering more technologies
+                    and areas of expertise for each user will improve the usefulness quite a
+                    bit, I believe. (It should be noted that a member's proficiency is meant to
+                    be a 1, 2, or 3, representing beginner, intermediate, and advanced, respectively.)</li>
+                    <li>Very little data filtering/validation is in place.</li>
+                    <li>The Add New Member(s) functionality works, but is one of my least favorite
+                    looking parts of the application. Take a look and you'll know why.</li>
+                    <li>There are already multiple opportunities for refactoring (in the interest of DRY and
+                    to make things more testable, at a minimum), but time/energy became a bit of a factor for
+                    me.</li>
+                    <li>Caching could/should be used.</li>
+                    <li>A couple of service factories are implemented inline (as closures). I prefer to
+                    implement these as concrete classes for performance/testing purposes.</li>
+                    <li>There's undoubtedly more, some of which may be found in the project's TODO.md file.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Where to Focus in the Code</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    It's a sample application, but there are a lot of files to sift through.
+                    I'm sure you can figure it out, but to save a little time, you may want
+                    to know the following:
+                </p>
+                <ul>
+                    <li>The source follows the ZF2 Skeleton Application's file structure. Rather
+                    than writing the bulk of the functionality and bringing it in as a distinct
+                    dependency via composer, it was built into the existing <code>Application</code>
+                    module in the <code>module/Application</code> folder.</li>
+                    <li>Twitter Bootstrap is built-in, but does not seem to be using Bower or
+                    anything like it. It, as well as any other non-HTML front-end code lives
+                    under the project's <code>public</code> folder.</li>
+                    <li>The <code>Application</code> module's configuration file,
+                    <code>module.config.php</code> lives in the <code>module/Application/config/</code>
+                    folder. Almost all of the wiring can be found in there.</li>
+                    <li>All of the interesting "controller" work is in the <code>ProjectsController.php</code>
+                    file, which lives in the <code>module/Application/src/Controller/</code> folder.</li>
+                    <li>The rest of the folders in
+                    <code>module/Application/src/</code> house the application functionality.
+                    My choice of paths/namespaces should hopefully be clear enough to quickly
+                    understand where different functionality lives.</li>
+                    <li>I typically put "programmatic business logic" in "service" classes and
+                    keep distinct database operations in what I/others refer to as "mapper"
+                    classes. For this exercise, I combined the different bits of functionality
+                    into the "service" classes. (I also let a little bit of that logic bleed
+                    into the controller logic, too, which I would eventually refactor out, given
+                    time.)</li>
+                    <li>The <code>Application\Expertise</code>, <code>Application\Member\Expertise</code>,
+                    <code>Application\Member\Technology</code>, and <code>Application\Technology</code> namespaces are
+                    quite simple and straightforward.</li>
+                    <li>The <code>MemberHydrator.php</code> file in the <code>src/Application/Member/Hydrator</code>
+                    folder is where I tried to solve, without a proper ORM, the problem of getting a member along
+                    with its technologies and areas of expertise. More time could probably see this
+                    functionality separated out into 3+ RESTful API calls, with at least one
+                    potentially combining them.</li>
+                    <li>The bulk of the rest of the functionality lies in the
+                    <code>Application\Project\ProjectService</code> and
+                    <code>Application\Team\TeamService</code> classes, with the former being quite light
+                    and the latter being the application's workhorse.</li>
+                    <li>The <code>Application\Team\TeamService</code> class has two methods,
+                    <code>getMembersBySpecs()</code> and <code>getMemberWeight()</code>. These compose
+                    the bulk of the "seeding" functionality and includes a description of how potential
+                    team members are "weighted".</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

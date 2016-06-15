@@ -1,0 +1,80 @@
+<?php
+$addMembersUrl = $this->url('projects', ['action' => 'addMembers', 'projectId' => $project->getId()]);
+?>
+<div class="page-header"><h1>Project: <?php echo $project->getName(); ?></h1></div>
+
+<a class="btn btn-default" href="<?php echo $addMembersUrl; ?>" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Member(s)</a>
+
+<p />
+
+<?php
+if (count($team) > 0) {
+?>
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-2">Title (Years at Signifly)</th>
+                <th class="col-md-2">Contact</th>
+                <th class="col-md-2">Areas of Expertise (proficiency)</th>
+                <th class="col-md-2">Technologies (proficiency)</th>
+                <th class="col-md-2">Profile Image</th>
+            </tr>
+        </thead>
+        <tbody>
+
+<?php
+foreach ($team as $member) {
+    $fullName = $member->getLastName() . ', ' . $member->getFirstName();
+    $email = $member->getEmail();
+    $phone = $member->getPhone();
+    $removeUrl = $this->url('projects', ['action' => 'remove', 'projectId' => $project->getId(), 'memberId' => $member->getId()]);
+?>
+            <tr>
+                <td><a class="btn btn-xs btn-danger" href="<?php echo $removeUrl; ?>" role="button" data-toggle="tooltip" title="remove from team"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>&nbsp;<?php echo $fullName; ?>
+                        <br />
+                        
+                    </p>
+                </td>
+                <td><?php echo $member->getTitle(); ?> (<?php echo $member->getYearsWithSignifly(); ?>)</td>
+                <td>
+                    <p>
+                        <a href="tel:<?php echo $member->getPhone(); ?>"><?php echo $member->getPhone(); ?></a>
+                        <br />
+                        <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
+                    </p>
+                </td>
+                <td>
+                    <p>
+<?php
+    foreach ($member->getAreasOfExpertise() as $aoe) {
+?>
+                        <?php echo $aoe->getAreaOfExpertiseName(); ?> (<?php echo $aoe->getProficiency(); ?>)<br />
+<?php
+    }
+?>
+                    </p>
+                </td>
+                <td>
+                    <p>
+<?php
+    foreach ($member->getTechnologies() as $tech) {
+?>
+                        <?php echo $tech->getTechnologyName(); ?> (<?php echo $tech->getProficiency(); ?>)<br />
+<?php
+    }
+?>
+                    </p>
+                </td>
+                <td><img src="<?php echo $member->getProfileImageUrl(); ?>" alt="<?php echo $fullName; ?>" class="img-responsive img-thumbnail"></td>
+            </tr>
+<?php
+}
+?>
+        </tbody>
+    </table>
+</div>
+<?php
+}
+?>

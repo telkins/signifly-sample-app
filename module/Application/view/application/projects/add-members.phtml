@@ -1,0 +1,58 @@
+<div class="page-header"><h1>Add New Member(s)</h1></div>
+
+<?php
+$form->prepare();
+
+$this->formElementErrors()
+    ->setMessageOpenFormat('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span><span id="helpBlock" class="help-block">')
+    ->setMessageSeparatorString('<br />')
+    ->setMessageCloseString('</span>');
+
+$errors = $form->getMessages();
+
+function outputElement($view, $element, $errors)
+{
+    if ($element instanceof \Zend\Form\Element\Hidden) {
+        echo $view->formHidden($element);
+        return;
+    }
+
+    if ($element instanceof \Zend\Form\Element\Submit) {
+        $element->setAttributes([
+            'class' => 'btn btn-default',
+        ]);
+        echo $view->formSubmit($element);
+        return;
+    }
+
+    $errorClass = '';
+    if (array_key_exists($element->getName(), $errors)) {
+        $errorClass = ' has-error has-feedback';
+    }
+
+    $element->setAttributes([
+        'id' => $element->getName(),
+        'class' => 'form-control',
+        'placeholder' => $element->getOption('label'),
+    ]);
+    $element->setLabelAttributes([
+        'class' => 'control-label',
+    ]);
+
+    echo '<div class="form-group' . $errorClass . '">';
+
+        echo $view->formLabel($element);
+        echo $view->formElement($element);
+        echo $view->formElementErrors($element);
+
+    echo '</div>';
+}
+
+
+echo $this->form()->openTag($form);
+foreach($form->getElements() as $element) {
+    outputElement($this, $element, $errors);
+}
+echo $this->form()->closeTag();
+
+?>
