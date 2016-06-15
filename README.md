@@ -22,7 +22,10 @@ $ ./composer.phar install
 
 Choose defaults whenever composer prompts you.
 
-Make sure you have executed the database creation script.
+Make sure you have executed the database creation script. It can be found in the
+<code>database</code> folder along with the ER diagram. (Please note that the indexes on
+the ER diagram show automatically by the tool when the tables are connected. They don't
+actually exist in the database I used, which is represented by the database creation script.)
 
 Copy <code>config/autoload/local.php.dist</code> to <code>config/autoload/local.php</code>
 and update the database connection data.
